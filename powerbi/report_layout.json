@@ -1,0 +1,177 @@
+{
+  "version": "1.0",
+  "theme": "ExecutiveDarkOrLight",
+  "defaultPage": "Page_Overview",
+  "pages": [
+    {
+      "name": "Page_Overview",
+      "displayName": "Executive Telesales Overview",
+      "visuals": [
+        {
+          "id": "vis_kpi_total_calls",
+          "type": "card",
+          "title": "Total Calls Processed",
+          "measure": "[Total Calls]"
+        },
+        {
+          "id": "vis_kpi_avg_score",
+          "type": "card",
+          "title": "Average Rubric Score",
+          "measure": "[Average Call Score]"
+        },
+        {
+          "id": "vis_kpi_resolution_rate",
+          "type": "card",
+          "title": "Objection Resolution Rate",
+          "measure": "[Objection Resolution Rate %]"
+        },
+        {
+          "id": "vis_kpi_critical_leakages",
+          "type": "card",
+          "title": "Critical Leakages Identified",
+          "measure": "[Critical Leakages]"
+        },
+        {
+          "id": "vis_chart_objections_category",
+          "type": "donutChart",
+          "title": "Objections by Category (Arabic)",
+          "category": "v_fact_objections.category_label_ar",
+          "values": "[Total Objections]"
+        },
+        {
+          "id": "vis_chart_leakages_severity",
+          "type": "barChart",
+          "title": "Sales Leakages by Severity",
+          "category": "v_fact_leakages.severity_label_ar",
+          "values": "[Total Leakages]"
+        },
+        {
+          "id": "vis_table_agent_performance",
+          "type": "table",
+          "title": "Agent Leaderboard & Resolution Rates",
+          "columns": [
+            "v_dim_agents.agent_id",
+            "v_dim_agents.total_calls",
+            "v_dim_agents.avg_overall_score",
+            "v_dim_agents.overall_objection_resolution_rate_pct",
+            "v_dim_agents.total_leakages"
+          ]
+        },
+        {
+          "id": "vis_table_calls_drillthrough",
+          "type": "table",
+          "title": "Call Inventory (Right Click -> Drill Through to Call Dashboard)",
+          "columns": [
+            "v_dim_calls.call_id",
+            "v_dim_calls.call_date_only",
+            "v_dim_calls.agent_id",
+            "v_dim_calls.call_objective",
+            "v_fact_call_assessments.overall_score",
+            "v_fact_call_assessments.objection_count",
+            "v_fact_call_assessments.leakage_count"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Page_Call_Dashboard",
+      "displayName": "Call-Level Deep Dive Dashboard",
+      "isDrillthroughTarget": true,
+      "drillthroughFilter": "v_dim_calls.call_id",
+      "visuals": [
+        {
+          "id": "vis_call_header_id",
+          "type": "card",
+          "title": "Call Identifier",
+          "measure": "[Selected Call ID]"
+        },
+        {
+          "id": "vis_call_header_agent",
+          "type": "card",
+          "title": "Sales Agent",
+          "measure": "[Selected Call Agent]"
+        },
+        {
+          "id": "vis_call_header_date",
+          "type": "card",
+          "title": "Call Date & Time",
+          "measure": "[Selected Call Date Formatted]"
+        },
+        {
+          "id": "vis_call_header_objective",
+          "type": "card",
+          "title": "Target Objective",
+          "measure": "[Selected Call Objective]"
+        },
+        {
+          "id": "vis_call_score_gauge",
+          "type": "gauge",
+          "title": "Rubric Score (0 - 100)",
+          "value": "[Selected Call Score]",
+          "target": 85.0,
+          "min": 0,
+          "max": 100
+        },
+        {
+          "id": "vis_call_status_badge",
+          "type": "card",
+          "title": "Evaluation Disposition",
+          "measure": "[Selected Call Score Status Badge]"
+        },
+        {
+          "id": "vis_call_summary_rtl",
+          "type": "card",
+          "title": "ملخص التقييم التنفيذي (Executive Summary RTL)",
+          "measure": "[Selected Call Summary RTL]",
+          "textAlignment": "Right"
+        },
+        {
+          "id": "vis_table_call_objections",
+          "type": "table",
+          "title": "الاعتراضات المرصودة بالأدلة (Customer Objections Grounded Evidence)",
+          "columns": [
+            "v_fact_objections.turn_reference",
+            "v_fact_objections.category_label_ar",
+            "v_fact_objections.customer_excerpt",
+            "v_fact_objections.agent_response_excerpt",
+            "v_fact_objections.addressed_status_label_ar"
+          ]
+        },
+        {
+          "id": "vis_table_call_leakages",
+          "type": "table",
+          "title": "تسرب المبيعات والفرص الضائعة (Sales Leakage & Missed Opportunities)",
+          "columns": [
+            "v_fact_leakages.turn_reference",
+            "v_fact_leakages.category_label_ar",
+            "v_fact_leakages.severity_label_ar",
+            "v_fact_leakages.evidence_class_label_ar",
+            "v_fact_leakages.transcript_excerpt",
+            "v_fact_leakages.missing_behavior",
+            "v_fact_leakages.rubric_ref"
+          ]
+        },
+        {
+          "id": "vis_table_call_coaching",
+          "type": "table",
+          "title": "خطة التدريب والتوجيه العملي (Actionable Coaching Recommendations)",
+          "columns": [
+            "v_fact_coaching.priority_label_ar",
+            "v_fact_coaching.skill_domain",
+            "v_fact_coaching.recommended_behavior",
+            "v_fact_coaching.example_phrase"
+          ]
+        },
+        {
+          "id": "vis_table_full_transcript",
+          "type": "table",
+          "title": "النص الكامل للمكالمة (Verbatim Jordanian Arabic Transcript)",
+          "columns": [
+            "v_call_dashboard_detail.transcript_raw"
+          ],
+          "textAlignment": "Right"
+        }
+      ]
+    }
+  ]
+}

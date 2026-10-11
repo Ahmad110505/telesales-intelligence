@@ -1,0 +1,180 @@
+{
+  "config": "{\"version\":\"5.53\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU08\",\"version\":\"5.58\",\"type\":2}},\"activeSectionName\":\"Section_Overview\",\"defaultDrillFilterOtherVisuals\":true}",
+  "layoutOptimization": 0,
+  "sections": [
+    {
+      "name": "Section_Overview",
+      "displayName": "Executive Telesales Overview",
+      "ordinal": 0,
+      "width": 1280,
+      "height": 720,
+      "config": "{}",
+      "filters": "[]",
+      "visualContainers": [
+        {
+          "x": 20,
+          "y": 15,
+          "z": 0,
+          "width": 1240,
+          "height": 55,
+          "config": "{\"name\":\"TitleBanner\",\"layouts\":[{\"id\":0,\"position\":{\"x\":20,\"y\":15,\"z\":0,\"width\":1240,\"height\":55}}],\"singleVisual\":{\"visualType\":\"textbox\",\"objects\":{\"general\":[{\"properties\":{\"paragraphs\":[{\"textRuns\":[{\"value\":\"Telesales Intelligence System — Executive Overview\",\"textStyle\":{\"fontSize\":\"18pt\",\"fontWeight\":\"bold\",\"color\":{\"solid\":{\"color\":\"#1E293B\"}}}},{\"value\":\"   |   Jordanian Arabic Quality Assurance Pipeline\",\"textStyle\":{\"fontSize\":\"12pt\",\"color\":{\"solid\":{\"color\":\"#64748B\"}}}}]}}]}}]}}}"
+        },
+        {
+          "x": 20,
+          "y": 80,
+          "z": 1,
+          "width": 290,
+          "height": 100,
+          "config": "{\"name\":\"KpiTotalCalls\",\"layouts\":[{\"id\":0,\"position\":{\"x\":20,\"y\":80,\"z\":1,\"width\":290,\"height\":100}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"v_dim_calls.call_id\",\"summary\":\"Count\"}]},\"objects\":{\"labels\":[{\"properties\":{\"title\":{\"expr\":{\"literal\":{\"value\":\"إجمالي المكالمات (Total Calls)\"}}}}}]}}}"
+        },
+        {
+          "x": 330,
+          "y": 80,
+          "z": 2,
+          "width": 290,
+          "height": 100,
+          "config": "{\"name\":\"KpiAvgScore\",\"layouts\":[{\"id\":0,\"position\":{\"x\":330,\"y\":80,\"z\":2,\"width\":290,\"height\":100}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"v_fact_call_assessments.overall_score\",\"summary\":\"Average\"}]},\"objects\":{\"labels\":[{\"properties\":{\"title\":{\"expr\":{\"literal\":{\"value\":\"متوسط التقييم (Avg Score / 100)\"}}}}}]}}}"
+        },
+        {
+          "x": 640,
+          "y": 80,
+          "z": 3,
+          "width": 290,
+          "height": 100,
+          "config": "{\"name\":\"KpiResolutionRate\",\"layouts\":[{\"id\":0,\"position\":{\"x\":640,\"y\":80,\"z\":3,\"width\":290,\"height\":100}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"v_fact_call_assessments.objection_resolution_rate_pct\",\"summary\":\"Average\"}]},\"objects\":{\"labels\":[{\"properties\":{\"title\":{\"expr\":{\"literal\":{\"value\":\"نسبة حل الاعتراضات (Resolution %)\"}}}}}]}}}"
+        },
+        {
+          "x": 950,
+          "y": 80,
+          "z": 4,
+          "width": 310,
+          "height": 100,
+          "config": "{\"name\":\"KpiCriticalLeakages\",\"layouts\":[{\"id\":0,\"position\":{\"x\":950,\"y\":80,\"z\":4,\"width\":310,\"height\":100}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"v_fact_call_assessments.critical_leakage_count\",\"summary\":\"Sum\"}]},\"objects\":{\"labels\":[{\"properties\":{\"title\":{\"expr\":{\"literal\":{\"value\":\"تسرب حرج للمبيعات (Critical Leakages)\"}}}}}]}}}"
+        },
+        {
+          "x": 20,
+          "y": 195,
+          "z": 5,
+          "width": 600,
+          "height": 240,
+          "config": "{\"name\":\"ChartObjectionsCategory\",\"layouts\":[{\"id\":0,\"position\":{\"x\":20,\"y\":195,\"z\":5,\"width\":600,\"height\":240}}],\"singleVisual\":{\"visualType\":\"donutChart\",\"projections\":{\"Category\":[{\"queryRef\":\"v_fact_objections.category_label_ar\"}],\"Y\":[{\"queryRef\":\"v_fact_objections.finding_id\",\"summary\":\"Count\"}]},\"objects\":{\"general\":[{\"properties\":{\"title\":{\"expr\":{\"literal\":{\"value\":\"الاعتراضات حسب التصنيف (Objections by Category)\"}}}}}]}}}"
+        },
+        {
+          "x": 640,
+          "y": 195,
+          "z": 6,
+          "width": 620,
+          "height": 240,
+          "config": "{\"name\":\"ChartLeakagesSeverity\",\"layouts\":[{\"id\":0,\"position\":{\"x\":640,\"y\":195,\"z\":6,\"width\":620,\"height\":240}}],\"singleVisual\":{\"visualType\":\"columnChart\",\"projections\":{\"Category\":[{\"queryRef\":\"v_fact_leakages.severity_label_ar\"}],\"Y\":[{\"queryRef\":\"v_fact_leakages.finding_id\",\"summary\":\"Count\"}]},\"objects\":{\"general\":[{\"properties\":{\"title\":{\"expr\":{\"literal\":{\"value\":\"تسرب المبيعات حسب الخطورة (Leakage Severity)\"}}}}}]}}}"
+        },
+        {
+          "x": 20,
+          "y": 450,
+          "z": 7,
+          "width": 1240,
+          "height": 250,
+          "config": "{\"name\":\"GridCallInventory\",\"layouts\":[{\"id\":0,\"position\":{\"x\":20,\"y\":450,\"z\":7,\"width\":1240,\"height\":250}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"v_dim_calls.call_id\"},{\"queryRef\":\"v_dim_calls.call_date_only\"},{\"queryRef\":\"v_dim_calls.agent_id\"},{\"queryRef\":\"v_dim_calls.call_objective\"},{\"queryRef\":\"v_fact_call_assessments.overall_score\"},{\"queryRef\":\"v_fact_call_assessments.objection_count\"},{\"queryRef\":\"v_fact_call_assessments.leakage_count\"},{\"queryRef\":\"v_fact_call_assessments.review_status\"}]},\"objects\":{\"general\":[{\"properties\":{\"title\":{\"expr\":{\"literal\":{\"value\":\"قائمة المكالمات (Right Click -> Drill-through -> Call Dashboard)\"}}}}}]}}}"
+        }
+      ]
+    },
+    {
+      "name": "Section_CallDashboard",
+      "displayName": "Call-Level Deep Dive Dashboard",
+      "ordinal": 1,
+      "width": 1280,
+      "height": 720,
+      "config": "{\"isDrillthroughTarget\":true}",
+      "filters": "[{\"name\":\"Filter_CallId\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"v_dim_calls\"}},\"Property\":\"call_id\"}},\"howCreated\":2}]",
+      "visualContainers": [
+        {
+          "x": 20,
+          "y": 15,
+          "z": 0,
+          "width": 1240,
+          "height": 55,
+          "config": "{\"name\":\"CallBanner\",\"layouts\":[{\"id\":0,\"position\":{\"x\":20,\"y\":15,\"z\":0,\"width\":1240,\"height\":55}}],\"singleVisual\":{\"visualType\":\"textbox\",\"objects\":{\"general\":[{\"properties\":{\"paragraphs\":[{\"textRuns\":[{\"value\":\"لوحة تحكم المكالمة التفصيلية (Single-Call Dashboard)\",\"textStyle\":{\"fontSize\":\"16pt\",\"fontWeight\":\"bold\",\"color\":{\"solid\":{\"color\":\"#0F172A\"}}}},{\"value\":\"  — التحليل المعمق والأدلة وتوجيهات التدريب\",\"textStyle\":{\"fontSize\":\"12pt\",\"color\":{\"solid\":{\"color\":\"#475569\"}}}}]}}]}}]}}}"
+        },
+        {
+          "x": 20,
+          "y": 80,
+          "z": 1,
+          "width": 240,
+          "height": 85,
+          "config": "{\"name\":\"CardCallId\",\"layouts\":[{\"id\":0,\"position\":{\"x\":20,\"y\":80,\"z\":1,\"width\":240,\"height\":85}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"v_dim_calls.call_id\"}]}}}"
+        },
+        {
+          "x": 280,
+          "y": 80,
+          "z": 2,
+          "width": 220,
+          "height": 85,
+          "config": "{\"name\":\"CardAgentId\",\"layouts\":[{\"id\":0,\"position\":{\"x\":280,\"y\":80,\"z\":2,\"width\":220,\"height\":85}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"v_dim_calls.agent_id\"}]}}}"
+        },
+        {
+          "x": 520,
+          "y": 80,
+          "z": 3,
+          "width": 240,
+          "height": 85,
+          "config": "{\"name\":\"CardObjective\",\"layouts\":[{\"id\":0,\"position\":{\"x\":520,\"y\":80,\"z\":3,\"width\":240,\"height\":85}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"v_dim_calls.call_objective\"}]}}}"
+        },
+        {
+          "x": 780,
+          "y": 80,
+          "z": 4,
+          "width": 220,
+          "height": 85,
+          "config": "{\"name\":\"CardScoreGauge\",\"layouts\":[{\"id\":0,\"position\":{\"x\":780,\"y\":80,\"z\":4,\"width\":220,\"height\":85}}],\"singleVisual\":{\"visualType\":\"gauge\",\"projections\":{\"Y\":[{\"queryRef\":\"v_fact_call_assessments.overall_score\"}]},\"objects\":{\"axis\":[{\"properties\":{\"max\":{\"expr\":{\"literal\":{\"value\":100.0}}},\"target\":{\"expr\":{\"literal\":{\"value\":85.0}}}}}]}}}"
+        },
+        {
+          "x": 1020,
+          "y": 80,
+          "z": 5,
+          "width": 240,
+          "height": 85,
+          "config": "{\"name\":\"CardReviewStatus\",\"layouts\":[{\"id\":0,\"position\":{\"x\":1020,\"y\":80,\"z\":5,\"width\":240,\"height\":85}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"v_fact_call_assessments.review_status\"}]}}}"
+        },
+        {
+          "x": 20,
+          "y": 180,
+          "z": 6,
+          "width": 1240,
+          "height": 60,
+          "config": "{\"name\":\"CardExecSummaryRTL\",\"layouts\":[{\"id\":0,\"position\":{\"x\":20,\"y\":180,\"z\":6,\"width\":1240,\"height\":60}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"v_fact_call_assessments.summary_assessment\"}]},\"objects\":{\"labels\":[{\"properties\":{\"title\":{\"expr\":{\"literal\":{\"value\":\"الملخص التنفيذي للمكالمة (Executive Evaluation Summary RTL)\"}}}}}]}}}"
+        },
+        {
+          "x": 20,
+          "y": 255,
+          "z": 7,
+          "width": 600,
+          "height": 210,
+          "config": "{\"name\":\"TableObjectionsEvidence\",\"layouts\":[{\"id\":0,\"position\":{\"x\":20,\"y\":255,\"z\":7,\"width\":600,\"height\":210}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"v_fact_objections.turn_reference\"},{\"queryRef\":\"v_fact_objections.category_label_ar\"},{\"queryRef\":\"v_fact_objections.customer_excerpt\"},{\"queryRef\":\"v_fact_objections.agent_response_excerpt\"},{\"queryRef\":\"v_fact_objections.addressed_status_label_ar\"}]},\"objects\":{\"general\":[{\"properties\":{\"title\":{\"expr\":{\"literal\":{\"value\":\"الاعتراضات المرصودة والأدلة (Customer Objections & Excerpts)\"}}}}}]}}}"
+        },
+        {
+          "x": 640,
+          "y": 255,
+          "z": 8,
+          "width": 620,
+          "height": 210,
+          "config": "{\"name\":\"TableLeakageEvidence\",\"layouts\":[{\"id\":0,\"position\":{\"x\":640,\"y\":255,\"z\":8,\"width\":620,\"height\":210}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"v_fact_leakages.turn_reference\"},{\"queryRef\":\"v_fact_leakages.category_label_ar\"},{\"queryRef\":\"v_fact_leakages.severity_label_ar\"},{\"queryRef\":\"v_fact_leakages.transcript_excerpt\"},{\"queryRef\":\"v_fact_leakages.missing_behavior\"},{\"queryRef\":\"v_fact_leakages.rubric_ref\"}]},\"objects\":{\"general\":[{\"properties\":{\"title\":{\"expr\":{\"literal\":{\"value\":\"تسرب المبيعات والفرص الضائعة (Sales Leakage & Rubric Breaches)\"}}}}}]}}}"
+        },
+        {
+          "x": 20,
+          "y": 480,
+          "z": 9,
+          "width": 750,
+          "height": 220,
+          "config": "{\"name\":\"TableCoachingActions\",\"layouts\":[{\"id\":0,\"position\":{\"x\":20,\"y\":480,\"z\":9,\"width\":750,\"height\":220}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"v_fact_coaching.priority_label_ar\"},{\"queryRef\":\"v_fact_coaching.skill_domain\"},{\"queryRef\":\"v_fact_coaching.recommended_behavior\"},{\"queryRef\":\"v_fact_coaching.example_phrase\"}]},\"objects\":{\"general\":[{\"properties\":{\"title\":{\"expr\":{\"literal\":{\"value\":\"توصيات التدريب والصياغة المقترحة بالأردني (Actionable Coaching)\"}}}}}]}}}"
+        },
+        {
+          "x": 790,
+          "y": 480,
+          "z": 10,
+          "width": 470,
+          "height": 220,
+          "config": "{\"name\":\"TranscriptViewer\",\"layouts\":[{\"id\":0,\"position\":{\"x\":790,\"y\":480,\"z\":10,\"width\":470,\"height\":220}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"v_call_dashboard_detail.transcript_raw\"}]},\"objects\":{\"labels\":[{\"properties\":{\"title\":{\"expr\":{\"literal\":{\"value\":\"النص الكامل للمكالمة (Verbatim Call Transcript RTL)\"}}}}}]}}}"
+        }
+      ]
+    }
+  ]
+}

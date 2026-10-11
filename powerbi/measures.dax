@@ -1,0 +1,250 @@
+// ==============================================================================
+// Telesales Intelligence System - Power BI Production DAX Measures
+// Organized by Business Domains & Display Folders
+// ==============================================================================
+
+// ------------------------------------------------------------------------------
+// DISPLAY FOLDER: 01. Call Volume & Executive KPIs
+// ------------------------------------------------------------------------------
+
+[Total Calls] = 
+COUNTROWS(v_dim_calls)
+
+[Analyzed Calls] = 
+CALCULATE(
+    COUNTROWS(v_dim_calls),
+    v_dim_calls[status] = "analyzed"
+)
+
+[Average Call Score] = 
+AVERAGE(v_fact_call_assessments[overall_score])
+
+[High Performing Calls] = 
+CALCULATE(
+    COUNTROWS(v_fact_call_assessments),
+    v_fact_call_assessments[overall_score] >= 80.0
+)
+
+[High Performing Calls %] = 
+DIVIDE([High Performing Calls], [Total Calls], 0.0)
+
+[At Risk Calls] = 
+CALCULATE(
+    COUNTROWS(v_fact_call_assessments),
+    v_fact_call_assessments[overall_score] < 60.0
+)
+
+[At Risk Calls %] = 
+DIVIDE([At Risk Calls], [Total Calls], 0.0)
+
+[Average Call Duration Min] = 
+DIVIDE(AVERAGE(v_dim_calls[duration_seconds]), 60, 0)
+
+
+// ------------------------------------------------------------------------------
+// DISPLAY FOLDER: 02. Objections & Handling Effectiveness
+// ------------------------------------------------------------------------------
+
+[Total Objections] = 
+COUNTROWS(v_fact_objections)
+
+[Objections Addressed] = 
+CALCULATE(
+    COUNTROWS(v_fact_objections),
+    v_fact_objections[addressed_status] = "yes"
+)
+
+[Objections Partially Addressed] = 
+CALCULATE(
+    COUNTROWS(v_fact_objections),
+    v_fact_objections[addressed_status] = "partially"
+)
+
+[Objections Unaddressed] = 
+CALCULATE(
+    COUNTROWS(v_fact_objections),
+    v_fact_objections[addressed_status] = "no"
+)
+
+[Objection Resolution Rate %] = 
+DIVIDE(
+    [Objections Addressed] + ([Objections Partially Addressed] * 0.5),
+    [Total Objections],
+    1.0
+)
+
+[Calls With Objections] = 
+CALCULATE(
+    DISTINCTCOUNT(v_fact_objections[call_id])
+)
+
+[Calls With Zero Objections] = 
+CALCULATE(
+    COUNTROWS(v_fact_call_assessments),
+    v_fact_call_assessments[objection_count] = 0
+)
+
+[Zero Objection Calls %] = 
+DIVIDE([Calls With Zero Objections], [Total Calls], 0.0)
+
+[Avg Objections Per Call] = 
+DIVIDE([Total Objections], [Total Calls], 0.0)
+
+
+// ------------------------------------------------------------------------------
+// DISPLAY FOLDER: 03. Sales Leakage & Opportunities
+// ------------------------------------------------------------------------------
+
+[Total Leakages] = 
+COUNTROWS(v_fact_leakages)
+
+[Critical Leakages] = 
+CALCULATE(
+    COUNTROWS(v_fact_leakages),
+    v_fact_leakages[severity] = "critical"
+)
+
+[High Leakages] = 
+CALCULATE(
+    COUNTROWS(v_fact_leakages),
+    v_fact_leakages[severity] = "high"
+)
+
+[Medium Leakages] = 
+CALCULATE(
+    COUNTROWS(v_fact_leakages),
+    v_fact_leakages[severity] = "medium"
+)
+
+[Low Leakages] = 
+CALCULATE(
+    COUNTROWS(v_fact_leakages),
+    v_fact_leakages[severity] = "low"
+)
+
+[Calls With Leakage] = 
+CALCULATE(
+    DISTINCTCOUNT(v_fact_leakages[call_id])
+)
+
+[Leakage Call Rate %] = 
+DIVIDE([Calls With Leakage], [Total Calls], 0.0)
+
+[Avg Leakages Per Call] = 
+DIVIDE([Total Leakages], [Total Calls], 0.0)
+
+[Observed Failures Count] = 
+CALCULATE(
+    COUNTROWS(v_fact_leakages),
+    v_fact_leakages[evidence_class] = "observed_failure"
+)
+
+[Plausible Opportunities Count] = 
+CALCULATE(
+    COUNTROWS(v_fact_leakages),
+    v_fact_leakages[evidence_class] = "plausible_missed_opportunity"
+)
+
+[Leakages Requiring Review] = 
+CALCULATE(
+    COUNTROWS(v_fact_leakages),
+    v_fact_leakages[recommended_human_review] = TRUE
+)
+
+
+// ------------------------------------------------------------------------------
+// DISPLAY FOLDER: 04. Coaching Actions
+// ------------------------------------------------------------------------------
+
+[Total Coaching Actions] = 
+COUNTROWS(v_fact_coaching)
+
+[High Priority Coaching Actions] = 
+CALCULATE(
+    COUNTROWS(v_fact_coaching),
+    v_fact_coaching[priority] = "high"
+)
+
+[Pending Coaching Reviews] = 
+CALCULATE(
+    COUNTROWS(v_fact_coaching),
+    v_fact_coaching[review_status] = "pending"
+)
+
+[Accepted Coaching Actions] = 
+CALCULATE(
+    COUNTROWS(v_fact_coaching),
+    v_fact_coaching[review_status] = "accepted"
+)
+
+
+// ------------------------------------------------------------------------------
+// DISPLAY FOLDER: 05. Call-Level Dashboard Detail (Single-Call Visual Cards)
+// ------------------------------------------------------------------------------
+
+[Selected Call ID] = 
+SELECTEDVALUE(
+    v_dim_calls[call_id],
+    "اختر مكالمة لعرض لوحة التحكم"
+)
+
+[Selected Call Score] = 
+SELECTEDVALUE(
+    v_fact_call_assessments[overall_score],
+    0.0
+)
+
+[Selected Call Score Formatted] = 
+IF(
+    ISBLANK(SELECTEDVALUE(v_dim_calls[call_id])),
+    "--",
+    FORMAT([Selected Call Score], "0.0") & " / 100"
+)
+
+[Selected Call Agent] = 
+SELECTEDVALUE(
+    v_dim_calls[agent_id],
+    "N/A"
+)
+
+[Selected Call Objective] = 
+SELECTEDVALUE(
+    v_dim_calls[call_objective],
+    "General Telesales"
+)
+
+[Selected Call Date Formatted] = 
+FORMAT(
+    SELECTEDVALUE(v_dim_calls[call_date]),
+    "yyyy-MM-dd hh:mm"
+)
+
+[Selected Call Summary RTL] = 
+SELECTEDVALUE(
+    v_fact_call_assessments[summary_assessment],
+    "الرجاء تحديد مكالمة لاستعراض التقييم الفني"
+)
+
+[Selected Call Objections Count] = 
+COALESCE(
+    SELECTEDVALUE(v_fact_call_assessments[objection_count]),
+    0
+)
+
+[Selected Call Leakages Count] = 
+COALESCE(
+    SELECTEDVALUE(v_fact_call_assessments[leakage_count]),
+    0
+)
+
+[Selected Call Score Status Badge] = 
+VAR ScoreVal = [Selected Call Score]
+RETURN
+    SWITCH(
+        TRUE(),
+        ISBLANK(SELECTEDVALUE(v_dim_calls[call_id])), "اختر مكالمة",
+        ScoreVal >= 85.0, "🟢 ممتاز (تجاوز المعيار)",
+        ScoreVal >= 70.0, "🟡 جيد (مستوى مقبول)",
+        ScoreVal >= 50.0, "🟠 بحاجة لتحسين",
+        "🔴 حرج (تسرب مبيعات)"
+    )

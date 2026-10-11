@@ -1,0 +1,246 @@
+{
+  "name": "TelesalesIntelligenceModel",
+  "compatibilityLevel": 1550,
+  "model": {
+    "culture": "en-US",
+    "dataSources": [
+      {
+        "type": "structured",
+        "name": "PostgreSQL_TelesalesDB",
+        "connectionDetails": {
+          "protocol": "postgres",
+          "address": {
+            "server": "127.0.0.1:5434",
+            "database": "telesales_db"
+          },
+          "authentication": null,
+          "query": null
+        },
+        "options": {}
+      }
+    ],
+    "tables": [
+      {
+        "name": "v_dim_calls",
+        "columns": [
+          { "name": "call_id", "dataType": "string", "isKey": true },
+          { "name": "agent_id", "dataType": "string" },
+          { "name": "call_date", "dataType": "dateTime" },
+          { "name": "call_date_only", "dataType": "dateTime" },
+          { "name": "call_time_only", "dataType": "string" },
+          { "name": "call_objective", "dataType": "string" },
+          { "name": "source", "dataType": "string" },
+          { "name": "turn_count", "dataType": "int64" },
+          { "name": "duration_seconds", "dataType": "int64" },
+          { "name": "status", "dataType": "string" }
+        ],
+        "partitions": [
+          {
+            "name": "Partition_v_dim_calls",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = PostgreSQL.Database(\"127.0.0.1:5434\", \"telesales_db\"),",
+                "    public_v_dim_calls = Source{[Schema=\"public\",Item=\"v_dim_calls\"]}[Data]",
+                "in",
+                "    public_v_dim_calls"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "v_dim_categories",
+        "columns": [
+          { "name": "lookup_id", "dataType": "int64", "isKey": true },
+          { "name": "category_type", "dataType": "string" },
+          { "name": "code", "dataType": "string" },
+          { "name": "label_en", "dataType": "string" },
+          { "name": "label_ar", "dataType": "string" },
+          { "name": "description", "dataType": "string" }
+        ],
+        "partitions": [
+          {
+            "name": "Partition_v_dim_categories",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = PostgreSQL.Database(\"127.0.0.1:5434\", \"telesales_db\"),",
+                "    public_v_dim_categories = Source{[Schema=\"public\",Item=\"v_dim_categories\"]}[Data]",
+                "in",
+                "    public_v_dim_categories"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "v_fact_call_assessments",
+        "columns": [
+          { "name": "assessment_id", "dataType": "int64", "isKey": true },
+          { "name": "call_id", "dataType": "string" },
+          { "name": "agent_id", "dataType": "string" },
+          { "name": "call_date", "dataType": "dateTime" },
+          { "name": "overall_score", "dataType": "double" },
+          { "name": "objection_count", "dataType": "int64" },
+          { "name": "objections_addressed_count", "dataType": "int64" },
+          { "name": "objections_partially_count", "dataType": "int64" },
+          { "name": "objections_unaddressed_count", "dataType": "int64" },
+          { "name": "objection_resolution_rate_pct", "dataType": "double" },
+          { "name": "leakage_count", "dataType": "int64" },
+          { "name": "critical_leakage_count", "dataType": "int64" },
+          { "name": "high_leakage_count", "dataType": "int64" },
+          { "name": "summary_assessment", "dataType": "string" },
+          { "name": "review_status", "dataType": "string" },
+          { "name": "model_id", "dataType": "string" }
+        ],
+        "partitions": [
+          {
+            "name": "Partition_v_fact_call_assessments",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = PostgreSQL.Database(\"127.0.0.1:5434\", \"telesales_db\"),",
+                "    public_v_fact_call_assessments = Source{[Schema=\"public\",Item=\"v_fact_call_assessments\"]}[Data]",
+                "in",
+                "    public_v_fact_call_assessments"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "v_fact_objections",
+        "columns": [
+          { "name": "finding_id", "dataType": "string", "isKey": true },
+          { "name": "call_id", "dataType": "string" },
+          { "name": "agent_id", "dataType": "string" },
+          { "name": "category_code", "dataType": "string" },
+          { "name": "category_label_en", "dataType": "string" },
+          { "name": "category_label_ar", "dataType": "string" },
+          { "name": "customer_excerpt", "dataType": "string" },
+          { "name": "turn_reference", "dataType": "string" },
+          { "name": "agent_response_excerpt", "dataType": "string" },
+          { "name": "addressed_status", "dataType": "string" },
+          { "name": "addressed_status_label_ar", "dataType": "string" },
+          { "name": "explanation", "dataType": "string" },
+          { "name": "confidence", "dataType": "double" }
+        ],
+        "partitions": [
+          {
+            "name": "Partition_v_fact_objections",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = PostgreSQL.Database(\"127.0.0.1:5434\", \"telesales_db\"),",
+                "    public_v_fact_objections = Source{[Schema=\"public\",Item=\"v_fact_objections\"]}[Data]",
+                "in",
+                "    public_v_fact_objections"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "v_fact_leakages",
+        "columns": [
+          { "name": "finding_id", "dataType": "string", "isKey": true },
+          { "name": "call_id", "dataType": "string" },
+          { "name": "agent_id", "dataType": "string" },
+          { "name": "category_code", "dataType": "string" },
+          { "name": "category_label_en", "dataType": "string" },
+          { "name": "category_label_ar", "dataType": "string" },
+          { "name": "severity", "dataType": "string" },
+          { "name": "severity_label_ar", "dataType": "string" },
+          { "name": "evidence_class", "dataType": "string" },
+          { "name": "transcript_excerpt", "dataType": "string" },
+          { "name": "turn_reference", "dataType": "string" },
+          { "name": "expected_behavior", "dataType": "string" },
+          { "name": "missing_behavior", "dataType": "string" },
+          { "name": "confidence", "dataType": "double" },
+          { "name": "recommended_human_review", "dataType": "boolean" }
+        ],
+        "partitions": [
+          {
+            "name": "Partition_v_fact_leakages",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = PostgreSQL.Database(\"127.0.0.1:5434\", \"telesales_db\"),",
+                "    public_v_fact_leakages = Source{[Schema=\"public\",Item=\"v_fact_leakages\"]}[Data]",
+                "in",
+                "    public_v_fact_leakages"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "v_fact_coaching",
+        "columns": [
+          { "name": "action_id", "dataType": "string", "isKey": true },
+          { "name": "call_id", "dataType": "string" },
+          { "name": "agent_id", "dataType": "string" },
+          { "name": "related_finding_id", "dataType": "string" },
+          { "name": "skill_domain", "dataType": "string" },
+          { "name": "priority", "dataType": "string" },
+          { "name": "priority_label_ar", "dataType": "string" },
+          { "name": "evidence_excerpt", "dataType": "string" },
+          { "name": "recommended_behavior", "dataType": "string" },
+          { "name": "example_phrase", "dataType": "string" },
+          { "name": "coaching_guideline_ref", "dataType": "string" }
+        ],
+        "partitions": [
+          {
+            "name": "Partition_v_fact_coaching",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = PostgreSQL.Database(\"127.0.0.1:5434\", \"telesales_db\"),",
+                "    public_v_fact_coaching = Source{[Schema=\"public\",Item=\"v_fact_coaching\"]}[Data]",
+                "in",
+                "    public_v_fact_coaching"
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "Rel_Calls_Assessments",
+        "fromTable": "v_fact_call_assessments",
+        "fromColumn": "call_id",
+        "toTable": "v_dim_calls",
+        "toColumn": "call_id"
+      },
+      {
+        "name": "Rel_Calls_Objections",
+        "fromTable": "v_fact_objections",
+        "fromColumn": "call_id",
+        "toTable": "v_dim_calls",
+        "toColumn": "call_id"
+      },
+      {
+        "name": "Rel_Calls_Leakages",
+        "fromTable": "v_fact_leakages",
+        "fromColumn": "call_id",
+        "toTable": "v_dim_calls",
+        "toColumn": "call_id"
+      },
+      {
+        "name": "Rel_Calls_Coaching",
+        "fromTable": "v_fact_coaching",
+        "fromColumn": "call_id",
+        "toTable": "v_dim_calls",
+        "toColumn": "call_id"
+      }
+    ]
+  }
+}

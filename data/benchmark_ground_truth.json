@@ -1,0 +1,68 @@
+[
+  {
+    "call_id": "BENCH-001",
+    "agent_id": "AGT-OMAR-04",
+    "call_objective": "fiber_subscription_upgrade",
+    "transcript": "[00:01] الموظف: ألو مرحبا أستاذ طارق، معك عمر من قسم المبيعات.\n[00:06] العميل: يا هلا أهلاً وسهلاً.\n[00:10] الموظف: العرض عنا اليوم باقة 300 ميجا بـ 25 دينار.\n[00:18] العميل: والله يا غالي كتير غالي علي هالأيام والراتب طار وما بلحق.\n[00:26] الموظف: بنقدر نعملك خصم 10% أول 3 شهور، شو رأيك؟\n[00:32] العميل: برضه شركة ثانية اعطتني عرض أحسن.\n[00:38] الموظف: تمام فكر بالموضوع ورنلنا إذا حبيت.",
+    "expected_objections": [
+      {
+        "category": "price",
+        "customer_excerpt": "كتير غالي علي هالأيام والراتب طار وما بلحق",
+        "addressed_status": "partially"
+      },
+      {
+        "category": "competitor",
+        "customer_excerpt": "شركة ثانية اعطتني عرض أحسن",
+        "addressed_status": "no"
+      }
+    ],
+    "expected_leakages": [
+      {
+        "category": "missed_discovery",
+        "severity": "high"
+      },
+      {
+        "category": "missed_next_step",
+        "severity": "medium"
+      }
+    ]
+  },
+  {
+    "call_id": "BENCH-002",
+    "agent_id": "AGT-SARA-09",
+    "call_objective": "motor_insurance_renewal",
+    "transcript": "[00:01] الموظف: مرحبا معك سارة من شركة التأمين المتحدة.\n[00:05] العميل: مش فاضي هسة وعندي شغل وملخوم بالدوام رن علي بعدين.\n[00:12] الموظف: اسمعني بس دقيقة مش رح أطول عليك العرض ممتاز.\n[00:18] العميل: يا أختي حكيتلك مش فاضي وملخوم باجتماع ومش وقتها بالمرة!",
+    "expected_objections": [
+      {
+        "category": "timing",
+        "customer_excerpt": "مش فاضي هسة وعندي شغل وملخوم بالدوام رن علي بعدين",
+        "addressed_status": "no"
+      }
+    ],
+    "expected_leakages": [
+      {
+        "category": "unaddressed_objection",
+        "severity": "critical"
+      }
+    ]
+  },
+  {
+    "call_id": "BENCH-003",
+    "agent_id": "AGT-AHMAD-12",
+    "call_objective": "b2b_cloud_backup",
+    "transcript": "[00:01] الموظف: مسا الخير مهندس رامي، معك أحمد من حلول السحابية.\n[00:06] العميل: الـ package ممتازة بس الـ budget تبعنا tight هاد الـ quarter.\n[00:14] الموظف: بنبدأ بـ Tier 1 بنص السعر لحماية أهم داتا شو رأيك؟\n[00:20] العميل: بدي استشير شريكي بالشركة بخصوص الـ SLA.\n[00:26] الموظف: أكيد، رح أبعثلك التفاصيل بمسج وبنرجع نتواصل بكرة.",
+    "expected_objections": [
+      {
+        "category": "price",
+        "customer_excerpt": "الـ budget تبعنا tight هاد الـ quarter",
+        "addressed_status": "yes"
+      },
+      {
+        "category": "authority",
+        "customer_excerpt": "بدي استشير شريكي بالشركة",
+        "addressed_status": "yes"
+      }
+    ],
+    "expected_leakages": []
+  }
+]
